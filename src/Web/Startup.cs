@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
+using Microsoft.ApplicationInsights.SnapshotCollector;
 
 namespace Microsoft.eShopWeb.Web
 {
@@ -99,6 +100,7 @@ namespace Microsoft.eShopWeb.Web
 
             services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddSnapshotCollector((configuration) => Configuration.Bind(nameof(SnapshotCollectorConfiguration), configuration));
 
             // Add memory cache services
             services.AddMemoryCache();
