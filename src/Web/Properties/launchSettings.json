@@ -36,7 +36,7 @@
       "launchBrowser": true,
       "environmentVariables": {
 
-        "CORECLR_ENABLE_PROFILING": "1",
+        "CORECLR_ENABLE_PROFILING": "0",
         "CORECLR_PROFILER": "{af0d821e-299b-5307-a3d8-b283c03916dd}",
         "CORECLR_PROFILER_PATH": "C:\\Dev\\OzCode\\agent\\dotnet\\src\\SkyApm.ClrProfiler\\\\x64\\\\Debug\\\\SkyApm.ClrProfiler.dll",
         "COR_PROFILER_HOME": "C:\\Dev\\OzCode\\agent\\dotnet\\src\\SkyApm.ClrProfiler.Trace\\bin\\Debug\\netstandard2.0",
