@@ -59,13 +59,30 @@ namespace Microsoft.eShopWeb.ApplicationCore.Services
             {
                 if (quantities.TryGetValue(item.Id.ToString(), out var quantity))
                 {
-                    Guard.Against.OutOfRange(quantity, nameof(quantity), 0, int.MaxValue);
-                    if (_logger != null) _logger.LogInformation($"Updating quantity of item ID:{item.Id} to {quantity}.");
-                    item.Quantity = quantity;
+                    var newQuantity = CalculateQuantity(item.Quantity, quantity);
+                    if (_logger != null) _logger.LogInformation($"Updating quantity of item ID:{item.Id} to {newQuantity}.");
+
+                    item.Quantity = newQuantity;
+                    
                 }
             }
             basket.RemoveEmptyItems();
             await _basketRepository.UpdateAsync(basket);
+        }
+
+        public int CalculateQuantity(int currentQuantity, int newQuantity)
+        {
+            if (newQuantity == 2) //in case the user forgot to add the free product (buy 2 get 1 for free)
+                newQuantity = 3;
+
+            if (currentQuantity > 2 && newQuantity < 2) //the client reduced the items quantity,
+                //remove the extra free item
+            {
+                --newQuantity;
+            }
+            Guard.Against.OutOfRange(newQuantity, nameof(newQuantity), 0, int.MaxValue);
+
+            return newQuantity;
         }
 
         public async Task TransferBasketAsync(string anonymousId, string userName)
