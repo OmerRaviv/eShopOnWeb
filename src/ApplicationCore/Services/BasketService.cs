@@ -1,10 +1,10 @@
-﻿using Ardalis.GuardClauses;
-using Microsoft.eShopWeb.ApplicationCore.Entities.BasketAggregate;
-using Microsoft.eShopWeb.ApplicationCore.Interfaces;
-using Microsoft.eShopWeb.ApplicationCore.Specifications;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.eShopWeb.ApplicationCore.Interfaces;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using Microsoft.eShopWeb.ApplicationCore.Specifications;
+using System.Linq;
+using Ardalis.GuardClauses;
+using Microsoft.eShopWeb.ApplicationCore.Entities.BasketAggregate;
 
 namespace Microsoft.eShopWeb.ApplicationCore.Services
 {
@@ -59,13 +59,30 @@ namespace Microsoft.eShopWeb.ApplicationCore.Services
             {
                 if (quantities.TryGetValue(item.Id.ToString(), out var quantity))
                 {
-                    if(_logger != null) _logger.LogInformation($"Updating quantity of item ID:{item.Id} to {quantity}.");
-                    Guard.Against.OutOfRange(quantity, nameof(quantity), 0,int.MaxValue);
-                    item.Quantity = quantity;
+                    var newQuantity = CalculateQuantity(item.Quantity, quantity);
+                    if (_logger != null) _logger.LogInformation($"Updating quantity of item ID:{item.Id} to {newQuantity}.");
+
+                    item.Quantity = newQuantity;
+
                 }
             }
             basket.RemoveEmptyItems();
             await _basketRepository.UpdateAsync(basket);
+        }
+
+        public int CalculateQuantity(int currentQuantity, int newQuantity)
+        {
+            if (newQuantity == 2) //in case the user forgot to add the free product (buy 2 get 1 for free)
+                newQuantity = 3;
+
+            if (currentQuantity > 2 && newQuantity < 2) //the client reduced the items quantity,
+                                                        //remove the extra free item
+            {
+                --newQuantity;
+            }
+            Guard.Against.OutOfRange(newQuantity, nameof(newQuantity), 0, int.MaxValue);
+
+            return newQuantity;
         }
 
         public async Task TransferBasketAsync(string anonymousId, string userName)
