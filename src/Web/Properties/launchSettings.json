@@ -25,7 +25,7 @@
         "OzCode:Agent:OpenBrowserWithSnapshot": "false",
         "CORECLR_PROFILER_HOME": "C:\\dev\\OzCode\\agent\\dotnet\\src\\SkyApm.ClrProfiler.Trace\\bin\\Debug\\netstandard2.0",
         "COR_PROFILER": "{af0d821e-299b-5307-a3d8-b283c03916dd}",
-        "ApplicationId": "db6fd7a3-02fc-41d8-900b-1c34e3991ae6",
+        "ApplicationId": "a81191ca-1887-493d-8740-14f4f2b6be31",
         "OzCode:Agent:TenantApiKey": "79cbe084-eb5d-4efe-a925-16733a3a1421",
         "OzCode:Agent:ServerAddress": "https://ozcodeclouddebugger-staging.azurewebsites.net",
         "OzCode:Agent:ClientAddress": "https://ozcodeclouddebuggerclient-staging.azurewebsites.net"
@@ -36,7 +36,7 @@
       "launchBrowser": true,
       "environmentVariables": {
 
-        "CORECLR_ENABLE_PROFILING": "0",
+        "CORECLR_ENABLE_PROFILING": "1",
         "CORECLR_PROFILER": "{af0d821e-299b-5307-a3d8-b283c03916dd}",
         "CORECLR_PROFILER_PATH": "C:\\Dev\\OzCode\\agent\\dotnet\\src\\SkyApm.ClrProfiler\\\\x64\\\\Debug\\\\SkyApm.ClrProfiler.dll",
         "COR_PROFILER_HOME": "C:\\Dev\\OzCode\\agent\\dotnet\\src\\SkyApm.ClrProfiler.Trace\\bin\\Debug\\netstandard2.0",
@@ -44,7 +44,7 @@
         "CORECLR_PROFILER_HOME": "C:\\Dev\\OzCode\\agent\\dotnet\\src\\SkyApm.ClrProfiler.Trace\\bin\\Debug\\netstandard2.0",
         "OZCODE_AGENT_HOME": "C:\\Dev\\OzCode\\agent\\dotnet\\src\\OzCode\\OzCode.ProductionDebuggerAgent\\bin\\Debug\\netstandard2.0",
         "OzCode:Agent:OpenBrowserWithSnapshot": "true",
-        "ApplicationId": "db6fd7a3-02fc-41d8-900b-1c34e3991ae6",
+        "ApplicationId": "a81191ca-1887-493d-8740-14f4f2b6be31",
         "OzCode:Agent:TenantApiKey": "79cbe084-eb5d-4efe-a925-16733a3a1421",
         "OzCode:Agent:ServerAddress": "https://ozcodeclouddebugger-staging.azurewebsites.net",
         "OzCode:Agent:ClientAddress": "https://ozcodeclouddebuggerclient-staging.azurewebsites.net"
