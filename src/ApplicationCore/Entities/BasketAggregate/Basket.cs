@@ -24,6 +24,9 @@ namespace Microsoft.eShopWeb.ApplicationCore.Entities.BasketAggregate
             }
             var existingItem = Items.FirstOrDefault(i => i.CatalogItemId == catalogItemId);
             existingItem.Quantity += quantity;
+
+            if (existingItem.Quantity == 2) //buy 2 or more and get one for free
+                existingItem.Quantity = 3;
         }
 
         public void RemoveEmptyItems()

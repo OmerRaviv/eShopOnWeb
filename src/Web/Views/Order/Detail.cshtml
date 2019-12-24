@@ -57,7 +57,7 @@
                     <section class="esh-orders-detail-item esh-orders-detail-item--middle col-xs-3">@item.ProductName</section>
                     <section class="esh-orders-detail-item esh-orders-detail-item--middle col-xs-1">$ @item.UnitPrice.ToString("N2")</section>
                     <section class="esh-orders-detail-item esh-orders-detail-item--middle col-xs-1">@item.Units</section>
-                    <section class="esh-orders-detail-item esh-orders-detail-item--middle col-xs-2">$ @Math.Round(item.Units * item.UnitPrice, 2).ToString("N2")</section>
+                    <section class="esh-orders-detail-item esh-orders-detail-item--middle col-xs-2">$ @Math.Round(item.UnitPrice * (item.Units - (item.Units >= 2 ? 1 : 0)), 2).ToString("N2")</section>
                 </article>
             }
         </section>

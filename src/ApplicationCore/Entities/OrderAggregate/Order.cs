@@ -44,7 +44,7 @@ namespace Microsoft.eShopWeb.ApplicationCore.Entities.OrderAggregate
             var total = 0m;
             foreach (var item in _orderItems)
             {
-                total += item.UnitPrice * item.Units;
+                total += item.UnitPrice * (item.Units - (item.Units >= 2 ? 1 : 0)); //remove one item from the total (buy 2 or more get one free)
             }
             return total;
         }

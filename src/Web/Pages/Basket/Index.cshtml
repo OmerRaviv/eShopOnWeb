@@ -1,7 +1,7 @@
 ﻿@page "{handler?}"
 @model IndexModel
 @{
-    ViewData["Title"] = "Basket";
+    ViewData["Title"] = "The Buggy Basket";
 }
 <section class="esh-catalog-hero">
     <div class="container">
@@ -38,7 +38,7 @@
                                 @*<input type="number" class="esh-basket-input" min="0" name="@("Items[" + i + "].Value")" value="@item.Quantity" />*@
                                 <input type="number" class="esh-basket-input"  name="@("Items[" + i + "].Value")" value="@item.Quantity" />
                             </section>
-                            <section class="esh-basket-item esh-basket-item--middle esh-basket-item--mark col-xs-2">$ @Math.Round(item.Quantity * item.UnitPrice, 2).ToString("N2")</section>
+                            <section class="esh-basket-item esh-basket-item--middle esh-basket-item--mark col-xs-2">$  @Math.Round(item.UnitPrice * (item.Quantity - (item.Quantity >= 2 ? 1 : 0)), 2).ToString("N2")</section>
                         </div>
                         <div class="row">
                             

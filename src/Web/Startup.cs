@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
+using Microsoft.ApplicationInsights.SnapshotCollector;
 
 namespace Microsoft.eShopWeb.Web
 {
@@ -64,17 +65,20 @@ namespace Microsoft.eShopWeb.Web
 
         public void ConfigureProductionServices(IServiceCollection services)
         {
-            // use real database
-            // Requires LocalDB which can be installed with SQL Server Express 2016
-            // https://www.microsoft.com/en-us/download/details.aspx?id=54284
-            services.AddDbContext<CatalogContext>(c =>
-                c.UseSqlServer(Configuration.GetConnectionString("CatalogConnection")));
+            ConfigureInMemoryDatabases(services);
+           
+            
+            //// use real database
+            //// Requires LocalDB which can be installed with SQL Server Express 2016
+            //// https://www.microsoft.com/en-us/download/details.aspx?id=54284
+            //services.AddDbContext<CatalogContext>(c =>
+            //    c.UseSqlServer(Configuration.GetConnectionString("CatalogConnection")));
 
-            // Add Identity DbContext
-            services.AddDbContext<AppIdentityDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
+            //// Add Identity DbContext
+            //services.AddDbContext<AppIdentityDbContext>(options =>
+            //    options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
 
-            ConfigureServices(services);
+            //ConfigureServices(services);
         }
 
 
@@ -99,6 +103,7 @@ namespace Microsoft.eShopWeb.Web
 
             services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddSnapshotCollector((configuration) => Configuration.Bind(nameof(SnapshotCollectorConfiguration), configuration));
 
             // Add memory cache services
             services.AddMemoryCache();
@@ -213,7 +218,7 @@ namespace Microsoft.eShopWeb.Web
             }
             else
             {
-                app.UseExceptionHandler("/Error");
+                //app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
@@ -233,7 +238,7 @@ namespace Microsoft.eShopWeb.Web
             //{
             //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             //});
-            
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
