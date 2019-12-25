@@ -8,29 +8,6 @@
     }
   },
   "profiles": {
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "COR_ENABLE_PROFILING": "1",
-        "OZCODE_INSTRUMENT_ALL": "false",
-        "CORECLR_ENABLE_PROFILING": "1",
-        "COR_PROFILER_PATH": "C:\\dev\\OzCode\\agent\\dotnet\\src\\SkyApm.ClrProfiler\\x64\\Debug\\SkyApm.ClrProfiler.dll",
-        "CORECLR_PROFILER": "{cf0d821e-299b-5307-a3d8-b283c03916dd}",
-        "OZCODE_AGENT_HOME": "C:\\dev\\OzCode\\agent\\dotnet\\src\\OzCode\\OzCode.ProductionDebuggerAgent\\bin\\Debug\\netstandard2.0",
-        "CORECLR_PROFILER_PATH": "C:\\dev\\OzCode\\agent\\dotnet\\src\\OzCode\\Tests\\OzCode.ClrProfiler.Tests\\bin\\Debug\\netcoreapp2.1\\SkyApm.ClrProfiler.dll",
-        "COR_PROFILER_HOME": "C:\\dev\\OzCode\\agent\\dotnet\\src\\SkyApm.ClrProfiler.Trace\\bin\\Debug\\net461",
-        "OZCODE_LOG_REJIT": "true",
-        "OzCode:Agent:OpenBrowserWithSnapshot": "false",
-        "CORECLR_PROFILER_HOME": "C:\\dev\\OzCode\\agent\\dotnet\\src\\SkyApm.ClrProfiler.Trace\\bin\\Debug\\netstandard2.0",
-        "COR_PROFILER": "{af0d821e-299b-5307-a3d8-b283c03916dd}",
-        "ApplicationId": "a81191ca-1887-493d-8740-14f4f2b6be31",
-        "OzCode:Agent:TenantApiKey": "79cbe084-eb5d-4efe-a925-16733a3a1421",
-        "OzCode:Agent:ServerAddress": "https://ozcodeclouddebugger-staging.azurewebsites.net",
-        "OzCode:Agent:ClientAddress": "https://ozcodeclouddebuggerclient-staging.azurewebsites.net"
-      }
-    },
     "Web - PROD": {
       "commandName": "Project",
       "launchBrowser": true,
@@ -44,9 +21,12 @@
         "CORECLR_PROFILER_HOME": "C:\\Dev\\OzCode\\agent\\dotnet\\src\\SkyApm.ClrProfiler.Trace\\bin\\Debug\\netstandard2.0",
         "OZCODE_AGENT_HOME": "C:\\Dev\\OzCode\\agent\\dotnet\\src\\OzCode\\OzCode.ProductionDebuggerAgent\\bin\\Debug\\netstandard2.0",
         "OzCode:Agent:OpenBrowserWithSnapshot": "true",
-        "OzCode:Agent:Token": "79cbe084-eb5d-4efe-a925-16733a3a1421|909123bf-7d2d-4efe-8c69-16440e393cb7",
-        "OzCode:Agent:ServerAddress": "https://ozcodeclouddebugger-staging.azurewebsites.net",
-        "OzCode:Agent:ClientAddress": "https://ozcodeclouddebuggerclient-staging.azurewebsites.net",
+        "_OzCode:Agent:Token": "79cbe084-eb5d-4efe-a925-16733a3a1421|909123bf-7d2d-4efe-8c69-16440e393cb7",
+        "OzCode:Agent:Token": "796d8082-3c0c-4eee-9afe-d2c73b56033e|b19fd5e4-ff8f-4398-8e33-fb13a7b0db61",
+        "_OzCode:Agent:ServerAddress": "https://ozcodeclouddebugger-staging.azurewebsites.net",
+        "_OzCode:Agent:ClientAddress": "https://ozcodeclouddebuggerclient-staging.azurewebsites.net",
+        "OzCode:Agent:ServerAddress": "https://service.oz-code.com",
+        "OzCode:Agent:ClientAddress": "https://app.oz-code.com",
         "OzCode:Agent:ForceLoad": "True"
       },
       "applicationUrl": "https://localhost:5001;http://localhost:5000"
