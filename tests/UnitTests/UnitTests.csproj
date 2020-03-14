@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <RootNamespace>Microsoft.eShopWeb.UnitTests</RootNamespace>
     <IsPackable>false</IsPackable>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

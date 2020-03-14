@@ -8,6 +8,7 @@
     <LangVersion>latest</LangVersion>
     <ApplicationInsightsResourceId>/subscriptions/e5baf736-76c0-401a-843e-0a2843ed1594/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/Web</ApplicationInsightsResourceId>
     <ApplicationInsightsAnnotationResourceId>/subscriptions/e5baf736-76c0-401a-843e-0a2843ed1594/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/Web</ApplicationInsightsAnnotationResourceId>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,6 +29,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Multiplexer\" />
     <Folder Include="wwwroot\fonts\" />
     <Folder Include="wwwroot\lib\" />
   </ItemGroup>
@@ -75,5 +77,16 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Multiplexer\SkyApm.ProfilerMultiplexer.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Multiplexer\SkyApm.ProfilerMultiplexer.ipdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Multiplexer\SkyApm.ProfilerMultiplexer.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
