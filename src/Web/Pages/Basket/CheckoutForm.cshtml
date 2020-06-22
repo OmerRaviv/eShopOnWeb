@@ -1,0 +1,110 @@
+﻿@page
+@model CheckoutFormModel
+@{
+    ViewData["Title"] = "Checkout Details";
+}
+
+<section class="esh-catalog-hero">
+    <div class="container">
+        <img class="esh-catalog-title" src="~/images/main_banner_text.png" />
+    </div>
+</section>
+
+@if (Model.PaymentConfirmation != null)
+{
+
+    <div class="container">
+        <h1>Thanks for your Order!</h1>
+
+        <h3>Your Order has been completed, reference number @Model.PaymentConfirmation.PaymentID</h3>
+
+        <a asp-page="/Index">Continue Shopping...</a>
+    </div>
+}
+else
+{
+<div class="container">
+    <h1>Checkout Details</h1>
+
+    <form method="post">
+        <h2>Shipping Address</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="ShippingAddress.Street"></label>
+                    <input asp-for="ShippingAddress.Street" class="form-control" />
+                    <span asp-validation-for="ShippingAddress.Street" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ShippingAddress.City"></label>
+                    <input asp-for="ShippingAddress.City" class="form-control" />
+                    <span asp-validation-for="ShippingAddress.City" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ShippingAddress.State"></label>
+                    <input asp-for="ShippingAddress.State" class="form-control" />
+                    <span asp-validation-for="ShippingAddress.State" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ShippingAddress.Country"></label>
+                    <input asp-for="ShippingAddress.Country" class="form-control" />
+                    <span asp-validation-for="ShippingAddress.Country" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ShippingAddress.ZipCode"></label>
+                    <input asp-for="ShippingAddress.ZipCode" class="form-control" />
+                    <span asp-validation-for="ShippingAddress.ZipCode" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <h2>Payment Details</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="PaymentDetails.Brand"></label>
+                    <select asp-for="@Model.PaymentDetails.Brand" asp-items="@Model.Brands" class="form-control"></select>
+                    <span asp-validation-for="PaymentDetails.Brand" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaymentDetails.CardNumber"></label>
+                    <input asp-for="PaymentDetails.CardNumber" class="form-control" />
+                    <span asp-validation-for="PaymentDetails.CardNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaymentDetails.CardHolderName"></label>
+                    <input asp-for="PaymentDetails.CardHolderName" class="form-control" />
+                    <span asp-validation-for="PaymentDetails.CardHolderName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaymentDetails.ExperationMonth"></label>
+                    <input asp-for="PaymentDetails.ExperationMonth" class="form-control" />
+                    <span asp-validation-for="PaymentDetails.ExperationMonth" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaymentDetails.ExperationYear"></label>
+                    <input asp-for="PaymentDetails.ExperationYear" class="form-control" />
+                    <span asp-validation-for="PaymentDetails.ExperationYear" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaymentDetails.CVC"></label>
+                    <input asp-for="PaymentDetails.CVC" class="form-control" />
+                    <span asp-validation-for="PaymentDetails.CVC" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn esh-basket-checkout" asp-page-handler="Complete">[ Complete Purchase ]</button>
+                <div>Powered by <strong>Flaky Billing</strong></div>
+
+            </div>
+        </div>
+    </form>
+
+    <a asp-page="/Index">Continue Shopping...</a>
+</div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+

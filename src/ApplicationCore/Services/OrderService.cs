@@ -23,7 +23,7 @@ namespace Microsoft.eShopWeb.ApplicationCore.Services
             _itemRepository = itemRepository;
         }
 
-        public async Task CreateOrderAsync(int basketId, Address shippingAddress)
+        public async Task<Order> CreateOrderAsync(int basketId, Address shippingAddress)
         {
             var basket = await _basketRepository.GetByIdAsync(basketId);
             Guard.Against.NullBasket(basketId, basket);
@@ -38,6 +38,19 @@ namespace Microsoft.eShopWeb.ApplicationCore.Services
             var order = new Order(basket.BuyerId, shippingAddress, items);
 
             await _orderRepository.AddAsync(order);
+
+            return order;
+        }
+
+        public async Task<Order> AddPaymentConfirmation(int orderId, PaymentConfirmation confirmation)
+        {
+            var order = await _orderRepository.GetByIdAsync(orderId);
+
+            order.AddPaymentConfirmation(confirmation);
+
+            await _orderRepository.UpdateAsync(order);
+
+            return order;
         }
     }
 }

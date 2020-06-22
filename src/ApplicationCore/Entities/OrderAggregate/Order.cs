@@ -27,6 +27,8 @@ namespace Microsoft.eShopWeb.ApplicationCore.Entities.OrderAggregate
         public DateTimeOffset OrderDate { get; private set; } = DateTimeOffset.Now;
         public Address ShipToAddress { get; private set; }
 
+        public PaymentConfirmation PaymentConfirmation { get; private set; } = null;
+
         // DDD Patterns comment
         // Using a private collection field, better for DDD Aggregate's encapsulation
         // so OrderItems cannot be added from "outside the AggregateRoot" directly to the collection,
@@ -47,6 +49,17 @@ namespace Microsoft.eShopWeb.ApplicationCore.Entities.OrderAggregate
                 total += item.UnitPrice * item.Units;
             }
             return total;
+        }
+
+        public void AddPaymentConfirmation(PaymentConfirmation confirmation)
+        {
+            Guard.Against.Null(confirmation, nameof(confirmation));
+
+            if (PaymentConfirmation != null)
+            {
+                throw new InvalidOperationException("PaymentConfirmation is already been set for order");
+            }
+            PaymentConfirmation = confirmation;
         }
     }
 }

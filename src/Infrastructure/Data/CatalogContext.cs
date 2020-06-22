@@ -38,6 +38,7 @@ namespace Microsoft.eShopWeb.Infrastructure.Data
             builder.Entity<Order>(ConfigureOrder);
             builder.Entity<OrderItem>(ConfigureOrderItem);
             builder.Entity<Address>(ConfigureAddress);
+            builder.Entity<PaymentConfirmation>(ConfigurePaymentConfirmation);
             builder.Entity<CatalogItemOrdered>(ConfigureCatalogItemOrdered);
             builder.Entity<BasketItem>(ConfigureBasketItem);
         }
@@ -75,6 +76,19 @@ namespace Microsoft.eShopWeb.Infrastructure.Data
 
             builder.Property(a => a.City)
                 .HasMaxLength(100)
+                .IsRequired();
+        }
+
+
+        private void ConfigurePaymentConfirmation(EntityTypeBuilder<PaymentConfirmation> builder)
+        {
+            builder.Property(a => a.PaymentDate)
+                .IsRequired();
+
+            builder.Property(a => a.PaymentID)
+                .IsRequired();
+
+            builder.Property(a => a.PaymentType)
                 .IsRequired();
         }
 
@@ -150,6 +164,7 @@ namespace Microsoft.eShopWeb.Infrastructure.Data
             navigation.SetPropertyAccessMode(PropertyAccessMode.Field);
 
             builder.OwnsOne(o => o.ShipToAddress);
+            builder.OwnsOne(o => o.PaymentConfirmation);
         }
 
         private void ConfigureOrderItem(EntityTypeBuilder<OrderItem> builder)

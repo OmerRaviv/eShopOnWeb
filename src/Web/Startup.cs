@@ -42,6 +42,18 @@ namespace Microsoft.eShopWeb.Web
 
         public void ConfigureDevelopmentServices(IServiceCollection services)
         {
+            //services.AddSingleton(typeof(Flaky.SDK.FlakyBillingConfiguration), new Flaky.SDK.FlakyBillingConfiguration()
+            //{
+            //    Testing = true
+            //});
+
+            services.AddSingleton(typeof(Flaky.SDK.FlakyBillingConfiguration), new Flaky.SDK.FlakyBillingConfiguration()
+            {
+                FlakyServerBaseUrl = "https://localhost:44323/"
+            });
+
+        
+
             // use in-memory database
             ConfigureInMemoryDatabases(services);
 
@@ -62,7 +74,7 @@ namespace Microsoft.eShopWeb.Web
             ConfigureServices(services);
         }
 
-        public void ConfigureProductionServices(IServiceCollection services)
+        private void ConfigreRealDatabase(IServiceCollection services)
         {
             // use real database
             // Requires LocalDB which can be installed with SQL Server Express 2016
@@ -73,8 +85,19 @@ namespace Microsoft.eShopWeb.Web
             // Add Identity DbContext
             services.AddDbContext<AppIdentityDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
+        }
 
-            ConfigureServices(services);
+        public void ConfigureProductionServices(IServiceCollection services)
+        {
+            services.AddSingleton(new Flaky.SDK.FlakyBillingConfiguration()
+            {
+                FlakyServerBaseUrl = Configuration.GetValue<string>("FLAKY_BILLING_SERVER")
+            });
+
+            ConfigureInMemoryDatabases(services);
+            //ConfigreRealDatabase(services);
+
+            //ConfigureServices(services);
         }
 
 
@@ -85,7 +108,7 @@ namespace Microsoft.eShopWeb.Web
             ConfigureCookieSettings(services);
 
             CreateIdentityIfNotCreated(services);
-            
+
             services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
 
             services.AddScoped<ICatalogViewModelService, CachedCatalogViewModelService>();
@@ -93,6 +116,7 @@ namespace Microsoft.eShopWeb.Web
             services.AddScoped<IBasketViewModelService, BasketViewModelService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IBillingService, BillingService>();
             services.AddScoped<CatalogViewModelService>();
             services.Configure<CatalogSettings>(Configuration);
             services.AddSingleton<IUriComposer>(new UriComposer(Configuration.Get<CatalogSettings>()));
@@ -114,12 +138,13 @@ namespace Microsoft.eShopWeb.Web
             {
                 options.Conventions.Add(new RouteTokenTransformerConvention(
                          new SlugifyParameterTransformer()));
-                
+
             }
             )
                 .AddRazorPagesOptions(options =>
                 {
                     options.Conventions.AuthorizePage("/Basket/Checkout");
+                    options.Conventions.AuthorizePage("/Basket/CheckoutForm");
                     options.AllowAreas = true;
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -151,7 +176,7 @@ namespace Microsoft.eShopWeb.Web
             {
                 var existingUserManager = scope.ServiceProvider
                     .GetService<UserManager<ApplicationUser>>();
-                if(existingUserManager == null)
+                if (existingUserManager == null)
                 {
                     services.AddIdentity<ApplicationUser, IdentityRole>()
                         .AddDefaultUI(UIFramework.Bootstrap4)
@@ -213,7 +238,7 @@ namespace Microsoft.eShopWeb.Web
             }
             else
             {
-                app.UseExceptionHandler("/Error");
+                // app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
