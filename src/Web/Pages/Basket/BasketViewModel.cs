@@ -12,7 +12,7 @@ namespace Microsoft.eShopWeb.Web.Pages.Basket
 
         public decimal Total()
         {
-            return Math.Round(Items.Sum(x => x.UnitPrice * x.Quantity), 2);
+            return Math.Round(Items.Sum(x => x.UnitPrice * (x.Quantity - (x.Quantity >= 2 ? 1 :0))), 2);
         }
     }
 }

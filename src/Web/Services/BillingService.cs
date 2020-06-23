@@ -41,9 +41,10 @@ namespace Microsoft.eShopWeb.Web.Services
                     ItemNumber = item.ItemOrdered.CatalogItemId,
                     UnitPrice = item.UnitPrice,
                     Amount = item.Units,
-                    LineTotal = item.UnitPrice * item.Units
+                    LineTotal = item.LineTotal
                 }).ToList(),
-                Address = new Flaky.Data.Address() {
+                Address = new Flaky.Data.Address()
+                {
                     FirstLine = shippingAddress.Street,
                     City = shippingAddress.City,
                     State = shippingAddress.State,

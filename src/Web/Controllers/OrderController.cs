@@ -36,7 +36,8 @@ namespace Microsoft.eShopWeb.Web.Controllers
                         ProductId = oi.ItemOrdered.CatalogItemId,
                         ProductName = oi.ItemOrdered.ProductName,
                         UnitPrice = oi.UnitPrice,
-                        Units = oi.Units
+                        Units = oi.Units,
+                        LineTotal = oi.LineTotal
                     }).ToList(),
                     OrderNumber = o.Id,
                     ShippingAddress = o.ShipToAddress,
@@ -66,7 +67,8 @@ namespace Microsoft.eShopWeb.Web.Controllers
                     ProductId = oi.ItemOrdered.CatalogItemId,
                     ProductName = oi.ItemOrdered.ProductName,
                     UnitPrice = oi.UnitPrice,
-                    Units = oi.Units
+                    Units = oi.Units,
+                    LineTotal = oi.LineTotal
                 }).ToList(),
                 OrderNumber = order.Id,
                 ShippingAddress = order.ShipToAddress,

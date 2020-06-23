@@ -46,7 +46,7 @@ namespace Microsoft.eShopWeb.ApplicationCore.Entities.OrderAggregate
             var total = 0m;
             foreach (var item in _orderItems)
             {
-                total += item.UnitPrice * item.Units;
+                total += item.LineTotal;
             }
             return total;
         }

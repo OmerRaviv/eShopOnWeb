@@ -18,5 +18,15 @@
             UnitPrice = unitPrice;
             Units = units;
         }
+
+        public decimal LineTotal {
+            get {
+                if (Units>2) {
+                    return UnitPrice * (Units-1);
+                } else {
+                    return UnitPrice * Units;
+                }
+            }
+        }
     }
 }
