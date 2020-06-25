@@ -59,6 +59,10 @@ select::-ms-expand {
     width: 150px !important;
 }
 
+.font-strong {
+    font-weight: bold;
+}
+
 .alert {
     padding-left: 0;
 }

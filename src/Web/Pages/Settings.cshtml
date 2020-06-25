@@ -1,0 +1,30 @@
+﻿@page
+@model Microsoft.eShopWeb.Web.Pages.SettingsModel
+@{
+    ViewData["Title"] = "Settings";
+}
+
+<h2>Settings</h2>
+
+<div>
+    Enviroment:
+    @if (Model.IsDevelopment)
+    {
+        <span class="font-strong">Development</span>
+    }
+    else if (Model.IsStaging)
+    {
+        <span class="font-strong">Staging</span>
+    }
+    else if (Model.IsProduction)
+    {
+        <span class="font-strong">Production</span>
+    } else
+    {
+        <span>Uknkown</span>
+    }
+</div>
+
+<div>
+    OzCode Agent Found: @(Model.AgentSettingFound?"Yes":"No")
+</div>
