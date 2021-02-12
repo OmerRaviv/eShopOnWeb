@@ -44,10 +44,11 @@ namespace Flaky.API.Controllers
                 }
             }
 
-            var result = new Transcation()
+            var result = new TranscationWithChargeDetails()
             {
                 ID = Guid.NewGuid(),
                 ChargeID = charge.ID,
+                ChargeDetails = charge,
                 Amount = charge.TotalAmmount,
                 Status = TranscationStatus.Completed,
                 Timestamp = DateTime.UtcNow
@@ -76,5 +77,10 @@ namespace Flaky.API.Controllers
         {
             return EncryptionService.Dercypt(message);
         }
+    }
+
+    class TranscationWithChargeDetails : Transcation
+    {
+        public ChargeDetails ChargeDetails { get; set; }
     }
 }
