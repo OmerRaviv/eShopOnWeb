@@ -1,4 +1,5 @@
 ﻿using Ardalis.ListStartupServices;
+using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
@@ -167,6 +168,8 @@ namespace Microsoft.eShopWeb.Web
             });
 
             _services = services; // used to debug registered services
+            services.AddApplicationInsightsTelemetry(Configuration["APPINSIGHTS_CONNECTIONSTRING"]);
+
         }
 
         private static void CreateIdentityIfNotCreated(IServiceCollection services)
@@ -210,6 +213,8 @@ namespace Microsoft.eShopWeb.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseMiddleware<ApplicationInsightsOzCodeIntegration>();
+
             //app.UseDeveloperExceptionPage();
             app.UseHealthChecks("/health",
                 new HealthCheckOptions

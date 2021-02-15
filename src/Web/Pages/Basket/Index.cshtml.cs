@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.ApplicationInsights;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -20,16 +21,21 @@ namespace Microsoft.eShopWeb.Web.Pages.Basket
         private readonly SignInManager<ApplicationUser> _signInManager;
         private string _username = null;
         private readonly IBasketViewModelService _basketViewModelService;
+        private readonly TelemetryClient _telemetryClient;
+
+        private const decimal HighValueDeal = 1000;
 
         public IndexModel(IBasketService basketService,
             IBasketViewModelService basketViewModelService,
             IUriComposer uriComposer,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            TelemetryClient telemetryClient)
         {
             _basketService = basketService;
             _uriComposer = uriComposer;
             _signInManager = signInManager;
             _basketViewModelService = basketViewModelService;
+            _telemetryClient = telemetryClient;
         }
 
         public BasketViewModel BasketModel { get; set; } = new BasketViewModel();
@@ -72,6 +78,19 @@ namespace Microsoft.eShopWeb.Web.Pages.Basket
             {
                 GetOrSetBasketCookieAndUserName();
                 BasketModel = await _basketViewModelService.GetOrCreateBasketForUser(_username);
+            }
+            var total = BasketModel.Total();
+
+            if (total > HighValueDeal)
+            {
+                _telemetryClient.TrackEvent("High value deal", new Dictionary<string, string>()
+                    {
+                        { "BuyerId", BasketModel.BuyerId }  
+                    },
+                    new Dictionary<string, double>
+                    {
+                        { "Basket Total", (double)total }
+                    });
             }
         }
 
