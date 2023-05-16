@@ -12,7 +12,27 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DD_LOG_LEVEL": "DEBUG",
+        "CORECLR_PROFILER_PATH": "C:\\dev\\dd-trace-dotnet-linux\\shared\\bin\\monitoring-home\\win-x64\\Datadog.Trace.ClrProfiler.Native.dll",
+        "CORECLR_PROFILER_PATH_64": "C:\\dev\\dd-trace-dotnet-linux\\shared\\bin\\monitoring-home\\win-x64\\Datadog.Trace.ClrProfiler.Native.dll",
+        "COR_PROFILER_PATH": "C:\\dev\\dd-trace-dotnet-linux\\shared\\bin\\monitoring-home\\win-x64\\Datadog.Trace.ClrProfiler.Native.dll",
+        "COR_PROFILER_PATH_64": "C:\\dev\\dd-trace-dotnet-linux\\shared\\bin\\monitoring-home\\win-x64\\Datadog.Trace.ClrProfiler.Native.dll",
+        "COR_ENABLE_PROFILING": "1",
+        "COR_PROFILER": "{846F5F1C-F9AE-4B07-969E-05C26BC060D8}",
+        "CORECLR_ENABLE_PROFILING": "1",
+        "DD_DYNAMIC_INSTRUMENTATION_ENABLED": "1",
+        "DD_DOTNET_TRACER_HOME": "C:\\dev\\dd-trace-dotnet-linux\\shared\\bin\\monitoring-home",
+        "CORECLR_PROFILER": "{846F5F1C-F9AE-4B07-969E-05C26BC060D8}",
+        "DD_REMOTE_CONFIG_POLL_INTERVAL_SECONDS": "1000",
+        "DD_SERVICE": "Pricing-Service",
+        "DD_ENV": "staging",
+        "DD_TRACE_DEBUG": "1",
+        "DD_APPSEC_ENABLED": "0",
+        "DD_VERSION": "123",
+        "DD_TAGS": "git.commit.sha:61ad49db6353119f85438168716ee52037f0d96c,git.repository_url:github.com/DataDog/debugger-backend"
+        //"DD_LOGS_DIRECT_SUBMISSION_INTEGRATIONS": "Serilog;ILogger",
+        //"DD_INTERNAL_RCM_FILE": "C:\\dev\\dd-trace-dotnet\\tracer\\test\\test-applications\\debugger\\Samples.Probes\\rcm_config.json",        
       }
     },
     "Web - PROD": {

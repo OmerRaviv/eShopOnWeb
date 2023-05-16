@@ -5,6 +5,7 @@ using Microsoft.eShopWeb.ApplicationCore.Specifications;
 using System.Linq;
 using Ardalis.GuardClauses;
 using Microsoft.eShopWeb.ApplicationCore.Entities.BasketAggregate;
+using System;
 
 namespace Microsoft.eShopWeb.ApplicationCore.Services
 {
@@ -72,15 +73,17 @@ namespace Microsoft.eShopWeb.ApplicationCore.Services
 
         public int CalculateQuantity(int currentQuantity, int newQuantity)
         {
-            if (newQuantity == 2) //in case the user forgot to add the free product (buy 2 get 1 for free)
+            // Implement "Buy 2 Get 1 Free" Black Friday sale
+            if (newQuantity == 2)
+            {
                 newQuantity = 3;
+            }
 
-            if (currentQuantity > 2 && newQuantity < 2) //the client reduced the items quantity,
-                                                        //remove the extra free item
+            if (currentQuantity > 2 && newQuantity < 2)
             {
                 --newQuantity;
             }
-            Guard.Against.OutOfRange(newQuantity, nameof(newQuantity), 0, int.MaxValue);
+            GuardAssertions.OutOfRange(newQuantity, nameof(newQuantity), 0, int.MaxValue);
 
             return newQuantity;
         }
@@ -94,6 +97,24 @@ namespace Microsoft.eShopWeb.ApplicationCore.Services
             if (basket == null) return;
             basket.BuyerId = userName;
             await _basketRepository.UpdateAsync(basket);
+        }
+    }
+
+    public class GuardAssertions
+    {
+        internal static void OutOfRange(int input, string parameterName, int rangeFrom, int rangeTo)
+        {
+            var comparer = Comparer<int>.Default;
+
+            if (comparer.Compare(rangeFrom, rangeTo) > 0)
+            {
+                throw new ArgumentException($"{nameof(rangeFrom)} should be less or equal than {nameof(rangeTo)}");
+            }
+
+            if (comparer.Compare(input, rangeFrom) < 0 || comparer.Compare(input, rangeTo) > 0)
+            {
+                throw new ArgumentOutOfRangeException($"Input {parameterName} was out of range", parameterName);
+            }
         }
     }
 }
