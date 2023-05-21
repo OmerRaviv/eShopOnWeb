@@ -6,19 +6,22 @@ using System.Linq;
 using Ardalis.GuardClauses;
 using Microsoft.eShopWeb.ApplicationCore.Entities.BasketAggregate;
 using System;
+using eShopWeb.ApplicationCore.Services;
 
 namespace Microsoft.eShopWeb.ApplicationCore.Services
 {
-    public class BasketService : IBasketService
+    public partial class  BasketService : IBasketService
     {
         private readonly IAsyncRepository<Basket> _basketRepository;
         private readonly IAppLogger<BasketService> _logger;
+        private readonly BasketCalculator _basketCalculator;
 
         public BasketService(IAsyncRepository<Basket> basketRepository,
             IAppLogger<BasketService> logger)
         {
             _basketRepository = basketRepository;
             _logger = logger;
+            _basketCalculator = new BasketCalculator();
         }
 
         public async Task AddItemToBasket(int basketId, int catalogItemId, decimal price, int quantity)
@@ -51,42 +54,6 @@ namespace Microsoft.eShopWeb.ApplicationCore.Services
             return count;
         }
 
-        public async Task SetQuantities(int basketId, Dictionary<string, int> quantities)
-        {
-            Guard.Against.Null(quantities, nameof(quantities));
-            var basket = await _basketRepository.GetByIdAsync(basketId);
-            Guard.Against.NullBasket(basketId, basket);
-            foreach (var item in basket.Items)
-            {
-                if (quantities.TryGetValue(item.Id.ToString(), out var quantity))
-                {
-                    var newQuantity = CalculateQuantity(item.Quantity, quantity);
-                    if (_logger != null) _logger.LogInformation($"Updating quantity of item ID:{item.Id} to {newQuantity}.");
-
-                    item.Quantity = newQuantity;
-
-                }
-            }
-            basket.RemoveEmptyItems();
-            await _basketRepository.UpdateAsync(basket);
-        }
-
-        public int CalculateQuantity(int currentQuantity, int newQuantity)
-        {
-            // Implement "Buy 2 Get 1 Free" Black Friday sale
-            if (newQuantity == 2)
-            {
-                newQuantity = 3;
-            }
-
-            if (currentQuantity > 2 && newQuantity < 2)
-            {
-                --newQuantity;
-            }
-            GuardAssertions.OutOfRange(newQuantity, nameof(newQuantity), 0, int.MaxValue);
-
-            return newQuantity;
-        }
 
         public async Task TransferBasketAsync(string anonymousId, string userName)
         {
